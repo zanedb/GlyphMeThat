@@ -20,8 +20,6 @@
   </a>
 </div>
 
----
-
 ## Overview
 
 iOS 18 introduced `NSAdaptiveImageGlyph`, allowing dynamic, inline images (like Genmoji) within attributed strings. `GlyphMeThat` simplifies working with these glyphs in SwiftUI applications.
@@ -32,6 +30,8 @@ It offers:
 2.  **`GenmojiText` View:** A SwiftUI view to *display* attributed strings with Genmoji, rendering them correctly inline with text.
 3.  **`GlyphEditor` View:** A SwiftUI `UIViewRepresentable` wrapper around `UITextView` that enables *editing* attributed strings with full Genmoji support (insertion, deletion via the standard text editing interactions).
 
+---
+
 ## Features
 
 *   **Display Genmoji:** Render `NSAttributedString` with adaptive image glyphs using the native `GenmojiText` view.
@@ -40,6 +40,8 @@ It offers:
 *   **Customizable Editor:** Configure `GlyphEditor` with placeholders, character limits, text alignment, font, focus, and more using standard SwiftUI modifiers and environment values.
 *   **Styling Protocol:** Extend `GlyphEditor`'s appearance using the `GlyphEditorStyle` protocol.
 *   **iOS 18+:** Built specifically to leverage the new `NSAdaptiveImageGlyph` capabilities.
+
+---
 
 ## Installation
 
@@ -66,6 +68,21 @@ And add `GlyphMeThat` to your target's dependencies:
     dependencies: ["GlyphMeThat"]
 ),
 ```
+---
+
+## API Reference
+
+*   **`Glyph`**: Utility class.
+    *   `decomposeNSAttributedString(_:)`: Extracts text, image ranges, and image data.
+    *   `recomposeAttributedString(...)`: Rebuilds `NSAttributedString` from decomposed parts.
+*   **`GenmojiText`**: SwiftUI `View` for displaying attributed strings with Genmoji.
+*   **`GlyphEditor`**: SwiftUI `UIViewRepresentable` for editing attributed strings with Genmoji.
+    *   Modifiers: `.placeholder()`, `.characterLimit()`, `.font()`, etc.
+    *   Environment Modifiers: `.glyphEditorPlaceholder()`, `.glyphEditorCharacterLimit()`, etc.
+*   **`GlyphEditorStyle`**: Protocol for creating custom editor styles.
+*   **`DefaultGlyphEditorStyle`**: The default identity style.
+
+---
 
 ## Usage
 
@@ -158,18 +175,30 @@ GlyphEditor(attributedText: $text)
     .frame(minHeight: 100)
 ```
 
-## API Reference
-
-*   **`Glyph`**: Utility class.
-    *   `decomposeNSAttributedString(_:)`: Extracts text, image ranges, and image data.
-    *   `recomposeAttributedString(...)`: Rebuilds `NSAttributedString` from decomposed parts.
-*   **`GenmojiText`**: SwiftUI `View` for displaying attributed strings with Genmoji.
-*   **`GlyphEditor`**: SwiftUI `UIViewRepresentable` for editing attributed strings with Genmoji.
-    *   Modifiers: `.placeholder()`, `.characterLimit()`, `.font()`, etc.
-    *   Environment Modifiers: `.glyphEditorPlaceholder()`, `.glyphEditorCharacterLimit()`, etc.
-*   **`GlyphEditorStyle`**: Protocol for creating custom editor styles.
-*   **`DefaultGlyphEditorStyle`**: The default identity style.
+---
 
 ## License
 
-`GlyphMeThat` is available under the MIT license. See the LICENSE file for more info.
+This project is released under the MIT License. See [LICENSE](LICENSE.md) for details.
+
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. Before you begin, take a moment to review the [Contributing Guide](CONTRIBUTING.md) for details on issue reporting, coding standards, and the PR process.
+
+## Support
+
+If you like this project, please consider giving it a ⭐️
+
+---
+
+## Where to find me:  
+- here, obviously.  
+- [Twitter](https://x.com/AetherAurelia)  
+- [Threads](https://www.threads.net/@aetheraurelia)  
+- [Bluesky](https://bsky.app/profile/aethers.world)  
+- [LinkedIn](https://www.linkedin.com/in/willjones24)
+
+---
+
+<p align="center">Built with 🍏🖋️🧑‍🎨 by Aether</p>
