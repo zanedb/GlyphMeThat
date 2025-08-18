@@ -117,7 +117,7 @@ import SwiftUI
 import GlyphMeThat
 
 struct EditorView: View {
-    @State private var attributedText = NSMutableAttributedString(string: "Start typing or paste Genmoji here ✨")
+    @State private var attributedText = NSAttributedString(string: "Start typing or paste Genmoji here ✨")
     @FocusState private var isEditorFocused: Bool
 
     var body: some View {
