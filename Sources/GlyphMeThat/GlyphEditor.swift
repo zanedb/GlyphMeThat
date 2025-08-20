@@ -3,7 +3,7 @@ import SwiftUI
 
 /// A SwiftUI wrapper around `UITextView` providing adaptive image glyph support for attributed text.
 ///
-/// Wraps `UITextView` to allow insertion of `NSAdaptiveImageGlyph` (iOS 18+).
+/// Wraps `UITextView` to allow insertion of `NSAdaptiveImageGlyph` (iOS 18+).
 /// Use modifiers to configure placeholder, character limit, styling, and focus control.
 public struct GlyphEditor: UIViewRepresentable {
     @Binding public var attributedText: NSAttributedString
@@ -14,6 +14,7 @@ public struct GlyphEditor: UIViewRepresentable {
     public var textAlignment: NSTextAlignment?
     public var allowsEditingTextAttributes: Bool?
     public var supportsAdaptiveImageGlyph: Bool?
+    public var hidesCaret: Bool?
     public var font: UIFont?
 
     public init(attributedText: Binding<NSAttributedString>) {
@@ -23,6 +24,7 @@ public struct GlyphEditor: UIViewRepresentable {
         self.textAlignment = nil
         self.allowsEditingTextAttributes = nil
         self.supportsAdaptiveImageGlyph = nil
+        self.hidesCaret = nil
         self.font = nil
     }
 
@@ -32,6 +34,7 @@ public struct GlyphEditor: UIViewRepresentable {
     public func textAlignment(_ alignment: NSTextAlignment) -> Self { var copy = self; copy.textAlignment = alignment; return copy }
     public func allowsEditingTextAttributes(_ allows: Bool) -> Self { var copy = self; copy.allowsEditingTextAttributes = allows; return copy }
     public func supportsAdaptiveImageGlyph(_ supports: Bool) -> Self { var copy = self; copy.supportsAdaptiveImageGlyph = supports; return copy }
+    public func hidesCaret(_ hides: Bool) -> Self { var copy = self; copy.hidesCaret = hides; return copy }
     public func font(_ font: UIFont) -> Self { var copy = self; copy.font = font; return copy }
 
     public func makeCoordinator() -> Coordinator {
@@ -86,6 +89,7 @@ public struct GlyphEditor: UIViewRepresentable {
         uiView.textAlignment = env._glyphTextEditorTextAlignment ?? self.textAlignment ?? .natural
         uiView.allowsEditingTextAttributes = env._glyphTextEditorAllowsEditingTextAttributes ?? self.allowsEditingTextAttributes ?? false
         uiView.supportsAdaptiveImageGlyph = env._glyphTextEditorSupportsAdaptiveImageGlyph ?? self.supportsAdaptiveImageGlyph ?? true
+        uiView.tintColor = (env._glyphTextEditorHidesCaret ?? hidesCaret ?? false) ? .clear : .tintColor
         // sync text
         if uiView.attributedText != attributedText {
             uiView.attributedText = attributedText
@@ -188,6 +192,10 @@ public extension View {
     func glyphEditorSupportsAdaptiveImageGlyph(_ supports: Bool) -> some View {
         environment(\._glyphTextEditorSupportsAdaptiveImageGlyph, supports)
     }
+    /// Enables or disables hiding the caret through clear tint color.
+    func glyphEditorHidesCaret(_ hides: Bool) -> some View {
+        environment(\._glyphTextEditorHidesCaret, hides)
+    }
 }
 
 // EnvironmentKeys
@@ -196,6 +204,7 @@ private struct GlyphTextEditorCharacterLimitKey: EnvironmentKey { static let def
 private struct GlyphTextEditorTextAlignmentKey: EnvironmentKey { static let defaultValue: NSTextAlignment? = nil }
 private struct GlyphTextEditorAllowsEditingTextAttributesKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 private struct GlyphTextEditorSupportsAdaptiveImageGlyphKey: EnvironmentKey { static let defaultValue: Bool? = nil }
+private struct GlyphTextEditorHidesCaretKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 
 private extension EnvironmentValues {
     var _glyphTextEditorPlaceholder: String? {
@@ -217,6 +226,10 @@ private extension EnvironmentValues {
     var _glyphTextEditorSupportsAdaptiveImageGlyph: Bool? {
         get { self[GlyphTextEditorSupportsAdaptiveImageGlyphKey.self] }
         set { self[GlyphTextEditorSupportsAdaptiveImageGlyphKey.self] = newValue }
+    }
+    var _glyphTextEditorHidesCaret: Bool? {
+        get { self[GlyphTextEditorHidesCaretKey.self] }
+        set { self[GlyphTextEditorHidesCaretKey.self] = newValue }
     }
 }
 
